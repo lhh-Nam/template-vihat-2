@@ -12,6 +12,7 @@ import RoleActions from '../../../redux/user/RoleRedux';
 
 // utils
 import { getTokenContent } from '../../../utils/WebUtils';
+import { pushRoute } from '../../../utils/RouterUtils';
 
 // styles
 import { withStyles } from '@material-ui/core/styles';
@@ -33,6 +34,10 @@ class HomeWelcome extends React.Component {
 		const { classify } = this.state;
 		this.props.getUserInfo(classify.user, { id: getTokenContent('contact_id') });
 		this.props.getRoles(classify.role, { page: 1, size: 15 });
+	}
+
+	onRoleList() {
+		pushRoute('/role/list');
 	}
 
 	_renderUserInfo = () => {
@@ -63,6 +68,7 @@ class HomeWelcome extends React.Component {
 					<p>Welcome to this testing page!</p>
 					<span>Đây là màn hình demo sau khi đăng nhập thành công, bấm đăng xuất để quay lại màn hình đăng nhập.</span>
 					<button onClick={() => this.props.onLogout(true)}>Đăng xuất</button>
+					<button onClick={() => this.onRoleList()}>Phân quyền</button>
 					{this._renderUserInfo()}
 					{this._renderListRole()}
 				</div>

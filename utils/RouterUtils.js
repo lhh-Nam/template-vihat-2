@@ -44,7 +44,7 @@ function handleChangeRoute(type, path, { params, options, paramPath, event, forc
             });
     });
 }
-
+``
 export function encodeURIComp(str) { str = String(str || ''); try { return encodeURIComponent(str); } catch (error) { return str; } }
 export function decodeURIComp(str = '') { str = String(str || ''); try { return decodeURIComponent(str); } catch (error) { return str; } }
 

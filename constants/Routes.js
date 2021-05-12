@@ -220,8 +220,16 @@ const routes = [
 
     // START: role page
     {
-        route: '/role_list',
+        route: '/role/list',
         page: 'role-list',
+    },
+    {
+        route: '/role/create',
+        page: 'role-create',
+    },
+    {
+        route: '/role/edit/:id',
+        page: 'role-edit',
     },
     // END: role page
 
