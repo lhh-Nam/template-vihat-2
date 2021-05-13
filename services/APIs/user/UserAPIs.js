@@ -15,4 +15,4 @@ export default Object.freeze({
         let url = `${domains.contact}contact/agent/get/${id}`;
         return await doRequest('get', url);
     },
-}); 
+});

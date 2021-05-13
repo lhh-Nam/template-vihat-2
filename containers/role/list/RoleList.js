@@ -9,13 +9,12 @@ import withAuth from '../../../hocs/AuthHocs';
 import RoleActions from '../../../redux/user/RoleRedux';
 
 // utils
-import { getDateFormat, isDate, getDateObj, } from '../../../utils/DateUtils';
+import { getDateFormat, getCustomDate, getTimestamp, } from '../../../utils/DateUtils';
 import { pushRoute, routerPush } from '../../../utils/RouterUtils';
 
 // styles
 import { withStyles } from '@material-ui/core/styles';
 import { styles } from './Styles';
-
 class RoleList extends React.Component {
 
 	constructor(props) {
@@ -41,17 +40,22 @@ class RoleList extends React.Component {
 	_renderListRole = () => {
 		const { classify } = this.state;
 		const { classes, roleFetching, roleContent } = this.props;
+
 		// get array roles 
 		let roles = roleContent[classify.role] ? roleContent[classify.role].items : [];
-		let nam = getDateObj(1620029387223);
+
+		//formatdate
+		let nam = getDateFormat('default', 1620029387223);
+		console.log("🚀 ~ nam", nam);
+
 		return (
 			<table className={classes.table}>
 				<thead>
 					<tr>
-						<th>Tên quyền</th>
-						<th>Tạo bởi</th>
-						<th>Ngày tạo</th>
-						<th>Ngày sửa đổi</th>
+						<th><div className={classes.resize}>Tên quyền</div></th>
+						<th><div className={classes.resize}>Tạo bởi</div></th>
+						<th><div className={classes.resize}>Ngày tạo</div></th>
+						<th><div className={classes.resize}>Ngày sửa đổi</div></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -84,7 +88,6 @@ class RoleList extends React.Component {
 		return (
 			<div className={classes.wrapper}>
 				{this._renderListRole()}
-
 			</div>
 		);
 	}

@@ -9,9 +9,8 @@ import withAuth from '../../../hocs/AuthHocs';
 import { withStyles } from '@material-ui/core/styles';
 import { styles } from './styles';
 
-import { useRouter } from 'next/router'
-
-
+// components
+import RoleForm from '../../../components/common/role-form'
 
 class RoleEdit extends React.Component {
     constructor(props) {
@@ -25,7 +24,7 @@ class RoleEdit extends React.Component {
     }
 
     componentDidMount() {
-        this.onItem();
+        this.onFindItem();
     }
 
     // get id from url
@@ -33,7 +32,7 @@ class RoleEdit extends React.Component {
         return { query };
     }
 
-    onItem() {
+    onFindItem() {
         const { classify } = this.state;
         const { query, roleFetching, roleContent } = this.props;
         let roles = roleContent[classify.role] ? roleContent[classify.role].items : [];
@@ -42,20 +41,28 @@ class RoleEdit extends React.Component {
         // find item in redux array
         let item = roles.find(element => element._id === id)
         this.setState({ item: item });
-
     }
 
-    _render() {
-        const { item } = this.state
-
-        return (<h1>render edit</h1>)
+    _renderRoleForm() {
+        const { item } = this.state;
+        let modules = item.modules ? item.modules : [];
+        console.log("🚀 ~ modules", modules)
+        return modules.map((module, index) => <RoleForm module={module} key={index} />);
     }
 
     render() {
-        return (<div>
-            {this._render()}
-            <h1>Edit</h1>
-        </div>);
+        const { classes } = this.props;
+        const { item } = this.state;
+
+        return (
+            <div className={classes.roleEdit}>
+                <div className={classes.heading}>
+                    <div className={classes.fixed}></div>
+                </div>
+                <div className={classes.main}>
+                    {this._renderRoleForm()}
+                </div>
+            </div>);
     }
 }
 

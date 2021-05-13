@@ -10,8 +10,10 @@ export const styles = theme => ({
 
     table: {
         borderCollapse: "collapse",
+        borderSpacing: 0,
         width: "100%",
         marginTop: 10,
+
 
         "& td": {
             //border: "1px solid #ddd",
@@ -27,8 +29,17 @@ export const styles = theme => ({
             textAlign: "left",
             //backgroundColor: "#6c7ae0",
             //color: "white"
-            borderRight: "1px dashed #ddd",
+            borderRight: "1px dashed gray",
+
+            "& div": {
+                width: "auto",
+                height: "auto",
+                minHeight: "20px",
+                minWidth: "20px"
+            }
         },
+
+
 
         "& th:hover": {
             background: "#ddd",
@@ -40,7 +51,13 @@ export const styles = theme => ({
             boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
             cursor: "pointer"
         },
-
-
     },
+
+    resize: {
+        resize: 'horizontal',
+        width: '100%',
+        overflow: 'auto',
+        height: '100%',
+        display: "block"
+    }
 });
