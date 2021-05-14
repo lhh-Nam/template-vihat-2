@@ -115,7 +115,6 @@ class RoleEdit extends React.Component {
 
     render() {
         const { classes } = this.props;
-        //console.log("🚀 ~ classes", classes)
         const { item } = this.state;
 
         return (

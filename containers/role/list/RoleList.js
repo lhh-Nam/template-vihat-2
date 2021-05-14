@@ -37,7 +37,7 @@ class RoleList extends React.Component {
 		});
 	}
 
-	_renderListRole = () => {
+	_renderListRole() {
 		const { classify } = this.state;
 		const { classes, roleFetching, roleContent } = this.props;
 
@@ -49,37 +49,39 @@ class RoleList extends React.Component {
 		console.log("🚀 ~ nam", nam);
 
 		return (
-			<table className={classes.table}>
-				<thead>
-					<tr>
-						<th><div className={classes.resize}>Tên quyền</div></th>
-						<th><div className={classes.resize}>Tạo bởi</div></th>
-						<th><div className={classes.resize}>Ngày tạo</div></th>
-						<th><div className={classes.resize}>Ngày sửa đổi</div></th>
-					</tr>
-				</thead>
-				<tbody>
-					{roleFetching[classify.role] ?
-						(
-							<tr>
-								<td>Loading...</td>
-								<td>Loading...</td>
-								<td>Loading...</td>
-								<td>Loading...</td>
-							</tr>
-						) :
-						roles?.map((role, index) => (
-							<tr key={index} onClick={() => this.onItems(role)}>
-								<td>{role.name}</td>
-								<td>{role.create_by.name}</td>
-								<td>{role.created_date}</td>
-								<td>{role.last_updated_date}</td>
-							</tr>
-						))
-					}
-				</tbody>
-			</table>
+			<div className={classes.tablee}>
+				<div className={classes.heading}>
+					<div className={classes.headingItem}><p>Tên quyền</p></div>
+					<div className={classes.headingItem}><p>Tạo bởi</p></div>
+					<div className={classes.headingItem}><p>Ngày tạo</p></div>
+					<div className={classes.headingItem}><p>Ngày sửa đổi</p></div>
+					<div className={classes.visible}></div>
+				</div>
+				<div className={classes.body}>
+
+					{roleFetching[classify.role] ? '' : roles?.map((role, index) => (
+						<div className={classes.bodyRow} key={index} onClick={() => this.onItems(role)}>
+							<div className={classes.rowColor}>
+								<div style={{ display: 'block', width: '8px', height: '100%', borderRadius: '8px', backgroundColor: `${role.color}` }}>
+								</div>
+							</div>
+
+							<div className={classes.rowInfo}>
+								<div className={classes.infoItem}><p>{role.name}</p></div>
+								<div className={classes.infoItem}><p>{role.create_by.name}</p></div>
+								<div className={classes.infoItem}><p>{role.created_date}</p></div>
+								<div className={classes.infoItem}><p>{role.last_updated_date}</p></div>
+								<div className={classes.visible}>
+									<p >Tạo bản sao</p>
+									<img src={require('../../../assets/icons/common/ic_trash_can_r.png')} /></div>
+							</div>
+						</div>
+					))}
+
+				</div>
+			</div>
 		)
+
 	}
 
 	render() {

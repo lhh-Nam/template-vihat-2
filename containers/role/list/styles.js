@@ -1,3 +1,4 @@
+import { red } from '@material-ui/core/colors';
 import { borderRadiuses, fontFamilys, fontSizes, textColors, colors, boxShadows, baseHeights } from '../../../assets/styles/Theme';
 
 export const styles = theme => ({
@@ -46,10 +47,7 @@ export const styles = theme => ({
         },
 
         "& tbody tr:hover": {
-            background: "#F0F8FD",
-            transform: "scale(1,1)",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
-            cursor: "pointer"
+
         },
     },
 
@@ -59,5 +57,97 @@ export const styles = theme => ({
         overflow: 'auto',
         height: '100%',
         display: "block"
+    },
+
+    /////////////////////////////////////////
+
+    tablee: {
+        padding: 10,
+    },
+
+    heading: {
+        display: 'flex',
+        paddingLeft: '80px',
+
+
+    },
+
+    headingItem: {
+        width: 100,
+        flex: '1 0 auto',
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+        paddingLeft: 8,
+        //flexBasis: '20%',
+        //borderRight: "1px dashed gray",
+
+        '&:hover p': {
+            background: '#e3e3e3',
+        },
+
+        '& p': {
+            borderRight: '1px dashed #ddd'
+        }
+    },
+
+    bodyRow: {
+        display: 'flex',
+        marginBottom: 10,
+        zIndex: 999,
+        '&:hover': {
+            background: "#F0F8FD",
+            transform: "scale(1,1)",
+            borderRadius: '0 10px 10px 0',
+            boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+            cursor: "pointer",
+
+            '& $visible': {
+                visibility: 'visible'
+            }
+        }
+
+    },
+
+    rowColor: { flexBasis: 80, },
+
+
+    rowInfo: {
+        display: 'flex',
+        flex: 1,
+    },
+
+    infoItem: {
+        width: 100,
+        flex: '1 0 auto',
+        paddingLeft: 8,
+
+        '& p': {
+            width: '100%',
+            textOverflow: 'ellipsis',
+            overflow: 'hidden',
+        }
+    },
+
+    visible: {
+        flex: 1,
+        display: 'flex',
+        alignItems: 'center',
+
+        visibility: 'hidden',
+
+        zIndex: 10,
+
+        '& p': {
+            color: '#267aff',
+        },
+
+        '& img': {
+            width: 20,
+            height: 20,
+            paddingLeft: 10,
+        }
     }
 });
+
+
+
