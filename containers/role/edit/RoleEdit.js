@@ -20,6 +20,7 @@ class RoleEdit extends React.Component {
                 role: 'roles',
             },
             item: {},
+
         }
     }
 
@@ -43,15 +44,78 @@ class RoleEdit extends React.Component {
         this.setState({ item: item });
     }
 
+    handleInput = (e, key) => {
+        this.setState({
+            item: {
+                ...this.state.item,
+                [key]: e.target.value,
+            }
+        });
+    };
+
     _renderRoleForm() {
         const { item } = this.state;
         let modules = item.modules ? item.modules : [];
-        console.log("🚀 ~ modules", modules)
         return modules.map((module, index) => <RoleForm module={module} key={index} />);
+    }
+
+    _renderInputColor() {
+        const { classes } = this.props;
+        const { item, nam } = this.state
+        return (
+            <div className={classes.inputColor}>
+                <div className={classes.container}>
+                    <div className={classes.inputArea}>
+                        <div className={classes.inputItem}>
+                            <label className={classes.nam} htmlFor="role">Tên quyền</label>
+                            <input
+                                type='text'
+                                id="role"
+                                value={item.name}
+                                onChange={(e) => this.handleInput(e, "name")} />
+                        </div>
+
+                        <div className={classes.inputItem}>
+                            <label htmlFor="desc">Mô tả</label>
+                            <textarea
+                                type='text'
+                                value={item.description}
+                                onChange={(e) => this.handleInput(e, "description")}
+                                rows='7' cols='40' id="desc" />
+                        </div>
+                    </div>
+
+                    <div className={classes.colorArea}>
+                        <lable>Màu nổi bật</lable>
+
+                        <div className={classes.group} >
+                            <div className={classes.color}></div>
+                            <div className={classes.color}></div>
+                            <div className={classes.color}></div>
+                            <div className={classes.color}></div>
+                            <div className={classes.color}></div>
+                            <div className={classes.color}></div>
+                            <div className={classes.color}></div>
+                            <div className={classes.color}></div>
+                            <div className={classes.color}></div>
+                            <div className={classes.color}></div>
+                            <div className={classes.color}></div>
+                            <div className={classes.color}></div>
+                            <div className={classes.color}></div>
+                            <div className={classes.color}></div>
+                            <div className={classes.color}></div>
+                            <div className={classes.color}></div>
+                            <div className={classes.color}></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     render() {
         const { classes } = this.props;
+        //console.log("🚀 ~ classes", classes)
         const { item } = this.state;
 
         return (
@@ -59,7 +123,9 @@ class RoleEdit extends React.Component {
                 <div className={classes.heading}>
                     <div className={classes.fixed}></div>
                 </div>
+
                 <div className={classes.main}>
+                    {this._renderInputColor()}
                     {this._renderRoleForm()}
                 </div>
             </div>);
