@@ -7,7 +7,7 @@ export const styles = theme => ({
         display: 'block',
         width: '100%',
         height: 200,
-        backgroundColor: 'rgb(87, 191, 219)',
+        //backgroundColor: 'rgb(87, 191, 219)',
     },
 
     // fixed: {

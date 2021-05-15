@@ -20,13 +20,17 @@ class RoleEdit extends React.Component {
                 role: 'roles',
             },
             item: {},
-
         }
     }
 
     componentDidMount() {
+
         this.onFindItem();
     }
+
+    handleChange = (event) => {
+        this.setState({ ...this.state, [event.target.name]: event.target.checked });
+    };
 
     // get id from url
     static getInitialProps({ query }) {
@@ -118,8 +122,8 @@ class RoleEdit extends React.Component {
         const { item } = this.state;
 
         return (
-            <div className={classes.roleEdit}>
-                <div className={classes.heading}>
+            <div className={classes.roleEdit} >
+                <div className={classes.heading} style={{ background: `${item.color}` }}>
                     <div className={classes.fixed}></div>
                 </div>
 

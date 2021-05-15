@@ -93,7 +93,7 @@ export const styles = theme => ({
     bodyRow: {
         display: 'flex',
         marginBottom: 10,
-        zIndex: 999,
+
         '&:hover': {
             background: "#F0F8FD",
             transform: "scale(1,1)",
@@ -101,15 +101,26 @@ export const styles = theme => ({
             boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
             cursor: "pointer",
 
-            '& $visible': {
+            '& $visible, $test': {
                 visibility: 'visible'
             }
         }
 
     },
 
-    rowColor: { flexBasis: 80, },
+    test: {
+        top: "50%",
+        left: "50%",
+        margin: "0",
+        position: "absolute",
+        transform: "translate(-50%, -50%)",
+        visibility: 'hidden',
+    },
 
+    rowColor: {
+        flexBasis: 80,
+        position: 'relative',
+    },
 
     rowInfo: {
         display: 'flex',
@@ -132,10 +143,7 @@ export const styles = theme => ({
         flex: 1,
         display: 'flex',
         alignItems: 'center',
-
         visibility: 'hidden',
-
-        zIndex: 10,
 
         '& p': {
             color: '#267aff',

@@ -28,7 +28,7 @@ export const styles = theme => ({
     },
 
     downUpBtn: {
-        flexBasis: '70%',
+        flexBasis: '75%',
 
         '& $nam': {
             transform: 'rotate(180deg)'
@@ -76,6 +76,15 @@ export const styles = theme => ({
             backgroundColor: '#007aff'
         }
     },
+    container: {
+        display: "flex"
+    },
+    paper: {
+        margin: theme.spacing(1)
+    },
+    displayNone: {
+        display: 'none',
+    }
 
     // list: {
     //     maxHeight: '0',

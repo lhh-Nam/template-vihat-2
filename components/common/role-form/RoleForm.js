@@ -4,14 +4,73 @@ import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import { styles } from './styles';
 
+import Switch from "@material-ui/core/Switch";
+import Paper from "@material-ui/core/Paper";
+import Collapse from "@material-ui/core/Collapse";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { checked } from 'glamor';
+
+
 class RoleForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { name: "" }
+        this.state = {
+            name: "",
+            funcName: [],
+            actions: [],
+            isDiable: false,
+            isCollapse: false,
+        }
     }
 
     componentDidMount() {
         this.onName();
+        this.onFunc();
+        // console.log(this.state);
+    }
+
+    onDisable = (event) => {
+        this.setState({ ...this.state, [event.target.name]: event.target.checked });
+    };
+
+    onCollapse = () => {
+        this.setState(
+            { isCollapse: !this.state.isCollapse }
+        );
+
+
+
+
+        //this.setState({ ...this.state, [event.target.name]: event.target.checked });
+    };
+
+    onFunc() {
+        let { funcName } = this.state;
+        let funcs = this.props.module.functions;
+
+        let a = [];
+
+
+        funcs.map(func => {
+            let nam = func.name.split(".")[0];
+            let huy = func.name.split(".")[1];
+            a.indexOf(nam) === -1 ? a.push(nam) : false
+        });
+
+        // funcs.map(func => {
+        //     let le = func.name;
+        //     let nam = func.name.split(".")[0];
+        //     let huy = func.name.split(".")[1];
+        //     if (a.indexOf(nam) === -1) {
+        //         a.push(le);
+        //     }
+        // });
+
+        console.log("🚀 ~ a", a)
+
+        //let name = result[0];
+        //func.name.split(".")
+        //funcName.indexOf(result[0]) === -1 ? funcName.push(result[0]) : false;
     }
 
     onName() {
@@ -81,12 +140,21 @@ class RoleForm extends React.Component {
                     <img className={classes.nam} src={require('../../../assets/icons/common/ic_arrow_down_g.png')} />
                 </div>
 
-                <div className={classes.toggleBtn}>
-                    <input type='checkbox' className={classes.appleSwitch} />
+                <div >
+                    <Switch
+                        checked={this.state.checkedB}
+                        onChange={(e) => this.onDisable(e)}
+                        color="primary"
+                        name="isCollap"
+                        inputProps={{ 'aria-label': 'primary checkbox' }}
+                    />
+                    {/* <input type='checkbox' className={classes.appleSwitch} /> */}
                 </div>
             </div>
         )
     }
+
+    _render
 
     _renderInfor() {
         return (
@@ -110,8 +178,24 @@ class RoleForm extends React.Component {
         const { name } = this.state;
         return (
             <div className={classes.roleItem}>
-                {this._renderWrapper()}
-                {/* {this._renderInfor()} */}
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={this.state.isCollapse}
+                            onChange={() => this.onCollapse()}
+                            className={classes.displayNone}
+                        />
+                    }
+                    label={this._renderWrapper()}
+                />
+
+                <div className={classes.container}>
+                    <Collapse in={this.state.isCollapse}>
+                        <Paper elevation={4} className={classes.paper}>
+                            <p>ádgasdgasdg</p>
+                        </Paper>
+                    </Collapse>
+                </div>
 
             </div>
         );

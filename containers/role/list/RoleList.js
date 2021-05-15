@@ -11,7 +11,7 @@ import RoleActions from '../../../redux/user/RoleRedux';
 // utils
 import { getDateFormat, getCustomDate, getTimestamp, } from '../../../utils/DateUtils';
 import { pushRoute, routerPush } from '../../../utils/RouterUtils';
-
+``
 // styles
 import { withStyles } from '@material-ui/core/styles';
 import { styles } from './Styles';
@@ -58,11 +58,14 @@ class RoleList extends React.Component {
 					<div className={classes.visible}></div>
 				</div>
 				<div className={classes.body}>
-
 					{roleFetching[classify.role] ? '' : roles?.map((role, index) => (
 						<div className={classes.bodyRow} key={index} onClick={() => this.onItems(role)}>
 							<div className={classes.rowColor}>
 								<div style={{ display: 'block', width: '8px', height: '100%', borderRadius: '8px', backgroundColor: `${role.color}` }}>
+								</div>
+
+								<div className={classes.test}>
+									<input type='checkbox' />
 								</div>
 							</div>
 
