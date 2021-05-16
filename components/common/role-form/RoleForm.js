@@ -8,18 +8,15 @@ import Switch from "@material-ui/core/Switch";
 import Paper from "@material-ui/core/Paper";
 import Collapse from "@material-ui/core/Collapse";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { checked } from 'glamor';
-
 
 class RoleForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "",
-            funcName: [],
-            actions: [],
+            name: '',
             isDiable: false,
             isCollapse: false,
+            actions: []
         }
     }
 
@@ -37,40 +34,32 @@ class RoleForm extends React.Component {
         this.setState(
             { isCollapse: !this.state.isCollapse }
         );
-
-
-
-
         //this.setState({ ...this.state, [event.target.name]: event.target.checked });
     };
 
     onFunc() {
-        let { funcName } = this.state;
         let funcs = this.props.module.functions;
-
-        let a = [];
-
+        let aArr = [];
+        let bArr = [];
 
         funcs.map(func => {
+            aArr.push(func.name.split("."))
             let nam = func.name.split(".")[0];
             let huy = func.name.split(".")[1];
-            a.indexOf(nam) === -1 ? a.push(nam) : false
+            bArr.indexOf(nam) === -1 ? bArr.push(nam) : false
         });
 
-        // funcs.map(func => {
-        //     let le = func.name;
-        //     let nam = func.name.split(".")[0];
-        //     let huy = func.name.split(".")[1];
-        //     if (a.indexOf(nam) === -1) {
-        //         a.push(le);
-        //     }
-        // });
+        let result = bArr.map((b) => {
+            let a1 = aArr.filter((a) => a[0] === b).map((a) => a[1]);
+            return {
+                name: b,
+                items: a1,
+            }
+        })
 
-        console.log("🚀 ~ a", a)
-
-        //let name = result[0];
-        //func.name.split(".")
-        //funcName.indexOf(result[0]) === -1 ? funcName.push(result[0]) : false;
+        this.setState({
+            actions: result
+        })
     }
 
     onName() {
@@ -131,68 +120,66 @@ class RoleForm extends React.Component {
         const { name } = this.state;
 
         return (
-            <div className={classes.wrapper}>
-                <div className={classes.name}>
-                    <p>{name}</p>
-                </div>
+            <div className={classes.roleItem}>
+                <div className={classes.wrapper}>
+                    <div className={classes.name}>
+                        <p>{name}</p>
+                    </div>
 
-                <div className={classes.downUpBtn}>
-                    <img className={classes.nam} src={require('../../../assets/icons/common/ic_arrow_down_g.png')} />
-                </div>
+                    <div className={classes.downUpBtn}>
+                        <img className={classes.nam} src={require('../../../assets/icons/common/ic_arrow_down_g.png')} />
+                    </div>
 
-                <div >
-                    <Switch
-                        checked={this.state.checkedB}
-                        onChange={(e) => this.onDisable(e)}
-                        color="primary"
-                        name="isCollap"
-                        inputProps={{ 'aria-label': 'primary checkbox' }}
-                    />
-                    {/* <input type='checkbox' className={classes.appleSwitch} /> */}
+                    <div >
+                        <Switch
+                            checked={this.state.checkedB}
+                            onChange={(e) => this.onDisable(e)}
+                            color="primary"
+                            name="isCollap"
+                            inputProps={{ 'aria-label': 'primary checkbox' }}
+                        />
+                        {/* <input type='checkbox' className={classes.appleSwitch} /> */}
+                    </div>
                 </div>
             </div>
         )
     }
 
-    _render
+    _renderFunction() {
+        const { name, actions } = this.state;
+        console.log("🚀 ~ RoleForm ~ _renderFunction ~ actions", actions)
 
-    _renderInfor() {
-        return (
+        return actions.length > 0 ? actions.map(action =>
             <div>
-                <p>nam</p>
-                <p>nam</p>
-                <p>nam</p>
-                <p>nam</p>
-                <p>nam</p>
-                <p>nam</p>
-                <p>nam</p>
-                <p>nam</p>
-                <p>nam</p>
-                <p>nam</p>
-            </div>
-        )
+                <p style={{ color: 'red' }}>{action.name}</p>
+
+                {action.items.map(nam => <p>{nam}</p>)}
+            </div>) : "......"
+
     }
 
     render() {
         const { classes, module } = this.props;
         const { name } = this.state;
         return (
-            <div className={classes.roleItem}>
-                <FormControlLabel
-                    control={
-                        <Switch
-                            checked={this.state.isCollapse}
-                            onChange={() => this.onCollapse()}
-                            className={classes.displayNone}
-                        />
-                    }
-                    label={this._renderWrapper()}
-                />
+            <div >
+                <div style={{ width: '100%' }}>
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                checked={this.state.isCollapse}
+                                onChange={() => this.onCollapse()}
+                                className={classes.displayNone}
+                            />
+                        }
+                        label={this._renderWrapper()}
+                    />
+                </div>
 
                 <div className={classes.container}>
                     <Collapse in={this.state.isCollapse}>
                         <Paper elevation={4} className={classes.paper}>
-                            <p>ádgasdgasdg</p>
+                            {this._renderFunction()}
                         </Paper>
                     </Collapse>
                 </div>

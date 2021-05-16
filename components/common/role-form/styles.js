@@ -1,4 +1,7 @@
 export const styles = theme => ({
+    MuiFormControlLabelRoot: {
+        display: 'none !important',
+    },
     roleItem: {
         height: 50,
         cursor: 'pointer',

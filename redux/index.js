@@ -11,6 +11,7 @@ const reducers = combineReducers({
     session: require('./common/SessionRedux').reducer,
     user: require('./user/UserRedux').reducer,
     role: require('./user/RoleRedux').reducer,
+    edit: require('./user/EditRedux').reducer,
 });
 
 const makeConfiguredStore = (reducer) => {

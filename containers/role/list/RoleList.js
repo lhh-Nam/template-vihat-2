@@ -42,7 +42,7 @@ class RoleList extends React.Component {
 		const { classes, roleFetching, roleContent } = this.props;
 
 		// get array roles 
-		let roles = roleContent[classify.role] ? roleContent[classify.role].items : [];
+		let roles = roleContent[classify.role];
 
 		//formatdate
 		let nam = getDateFormat('default', 1620029387223);

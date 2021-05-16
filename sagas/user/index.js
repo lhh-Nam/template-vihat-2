@@ -4,6 +4,7 @@ import { Types } from '../../redux/user/UserRedux';
 import * as Sagas from './UserSagas';
 
 import RoleSagas from './role';
+import EditSagas from './edit';
 
 const keys = [
     ['userLogin'],
@@ -17,4 +18,5 @@ const UserSagas = sagasMappingEffects(keys, Types, Sagas);
 export default [
     ...UserSagas,
     ...RoleSagas,
+    ...EditSagas,
 ];
