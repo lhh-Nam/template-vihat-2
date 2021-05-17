@@ -1,13 +1,11 @@
 export const styles = theme => ({
-    MuiFormControlLabelRoot: {
-        display: 'none !important',
-    },
     roleItem: {
+        display: 'block',
         height: 50,
         cursor: 'pointer',
         backgroundColor: '#fff',
         borderRadius: 10,
-        marginBottom: 30,
+        margin: '0 0 30px 0',
         boxShadow: '0px 4px 16px 0px rgb(125 125 125 / 8%)',
 
         '&:hover': {
@@ -80,19 +78,12 @@ export const styles = theme => ({
         }
     },
     container: {
-        display: "flex"
+
     },
     paper: {
-        margin: theme.spacing(1)
+        marginBottom: theme.spacing(4)
     },
     displayNone: {
         display: 'none',
     }
-
-    // list: {
-    //     maxHeight: '0',
-    //     transition: 'max-height 0.15s ease-out',
-    //     overflow: 'hidden',
-    //     background: '#d5d5d5'
-    // }
 })

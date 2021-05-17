@@ -117,10 +117,10 @@ class RoleForm extends React.Component {
 
     _renderWrapper() {
         const { classes, module } = this.props;
-        const { name } = this.state;
+        const { name, isDiable } = this.state;
 
         return (
-            <div className={classes.roleItem}>
+            <div >
                 <div className={classes.wrapper}>
                     <div className={classes.name}>
                         <p>{name}</p>
@@ -132,10 +132,10 @@ class RoleForm extends React.Component {
 
                     <div >
                         <Switch
-                            checked={this.state.checkedB}
+                            checked={isDiable}
                             onChange={(e) => this.onDisable(e)}
                             color="primary"
-                            name="isCollap"
+                            name="isDiable"
                             inputProps={{ 'aria-label': 'primary checkbox' }}
                         />
                         {/* <input type='checkbox' className={classes.appleSwitch} /> */}
@@ -147,37 +147,43 @@ class RoleForm extends React.Component {
 
     _renderFunction() {
         const { name, actions } = this.state;
+        const { classes } = this.props;
         //console.log("🚀 ~ RoleForm ~ _renderFunction ~ actions", actions)
 
-        return actions.length > 0 ? actions.map((action, index) =>
-            <div key={index}>
-                <p style={{ color: 'red' }}>{action.name}</p>
+        return (
+            <div className={classes.func}>
+                {actions.length > 0 ? actions.map((action, index) =>
+                    <div key={index}>
+                        <p style={{ color: 'red' }}>{action.name}</p>
 
-                {action.items.map((item, index) => <p key={index}>{item}</p>)}
-            </div>) : "......"
+                        {action.items.map((item, index) => <p key={index}>{item}</p>)}
+                    </div>) : "......"}
+            </div>
+        )
 
     }
 
     render() {
         const { classes, module } = this.props;
-        const { name } = this.state;
+        const { isCollapse } = this.state;
         return (
             <div >
-                <div style={{ width: '100%' }}>
+                <div>
                     <FormControlLabel
                         control={
                             <Switch
-                                checked={this.state.isCollapse}
+                                checked={isCollapse}
                                 onChange={() => this.onCollapse()}
                                 className={classes.displayNone}
                             />
                         }
                         label={this._renderWrapper()}
+                        className={classes.roleItem}
                     />
                 </div>
 
                 <div className={classes.container}>
-                    <Collapse in={this.state.isCollapse}>
+                    <Collapse in={isCollapse}>
                         <Paper elevation={4} className={classes.paper}>
                             {this._renderFunction()}
                         </Paper>

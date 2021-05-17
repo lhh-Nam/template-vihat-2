@@ -54,7 +54,7 @@ export const styles = theme => ({
         height: 40,
         borderRadius: '50%',
         backgroundColor: 'blue',
-        marginRight: 10,
-        marginBottom: 10,
+        marginRight: 24,
+        marginBottom: 12,
     }
 })

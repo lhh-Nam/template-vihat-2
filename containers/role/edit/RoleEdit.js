@@ -31,30 +31,27 @@ class RoleEdit extends React.Component {
         const { classify } = this.state;
         const { query } = this.props;
         let id = query.id;
-        //this.onFindItem();
         this.props.getEdits(classify.edit, { id: id, lang: 'vi' });
-
     }
 
     componentDidUpdate(prevProps, prevState) {
         const { classify } = this.state;
         const { editContent, editFetching } = this.props;
         if (prevProps.editContent !== editContent) {
-            this.setState({                  //update the state after checking
+            this.setState({          //update the state after checking
                 item: editContent[classify.edit]
             });
         }
     }
-
-    handleChange = (event) => {
-        this.setState({ ...this.state, [event.target.name]: event.target.checked });
-    };
 
     // get id from url
     static getInitialProps({ query }) {
         return { query };
     }
 
+    handleChange = (event) => {
+        this.setState({ ...this.state, [event.target.name]: event.target.checked });
+    };
 
     handleInput = (e, key) => {
         this.setState({

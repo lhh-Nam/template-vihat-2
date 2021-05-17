@@ -40,6 +40,10 @@ class HomeWelcome extends React.Component {
 		pushRoute('/role/list');
 	}
 
+	onRoleCreate() {
+		pushRoute('/role/create');
+	}
+
 	_renderUserInfo = () => {
 		const { classify } = this.state;
 		const { classes, userFetching, userContent } = this.props;
@@ -69,6 +73,7 @@ class HomeWelcome extends React.Component {
 					<span>Đây là màn hình demo sau khi đăng nhập thành công, bấm đăng xuất để quay lại màn hình đăng nhập.</span>
 					<button onClick={() => this.props.onLogout(true)}>Đăng xuất</button>
 					<button onClick={() => this.onRoleList()}>Phân quyền</button>
+					<button onClick={() => this.onRoleCreate()}>Tạo mới</button>
 					{this._renderUserInfo()}
 					{this._renderListRole()}
 				</div>
