@@ -5,6 +5,7 @@ import * as Sagas from './UserSagas';
 
 import RoleSagas from './role';
 import EditSagas from './edit';
+import CreateSagas from './create';
 
 const keys = [
     ['userLogin'],
@@ -19,4 +20,5 @@ export default [
     ...UserSagas,
     ...RoleSagas,
     ...EditSagas,
+    ...CreateSagas,
 ];

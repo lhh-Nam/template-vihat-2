@@ -10,8 +10,6 @@ import { validateResp, getErrorMsg } from '../../../utils/StringUtils';
 export function* getEdits(action) {
     const { classify, params } = action;
     const startReqAt = getTimestamp();
-    console.log('nam saga 1');
-
     try {
         let resp = yield call(EditAPIs.getEdits, params);
         // console.log("🚀 ~ function*getEdits ~ resp", resp)

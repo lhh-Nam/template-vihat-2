@@ -147,13 +147,13 @@ class RoleForm extends React.Component {
 
     _renderFunction() {
         const { name, actions } = this.state;
-        console.log("🚀 ~ RoleForm ~ _renderFunction ~ actions", actions)
+        //console.log("🚀 ~ RoleForm ~ _renderFunction ~ actions", actions)
 
-        return actions.length > 0 ? actions.map(action =>
-            <div>
+        return actions.length > 0 ? actions.map((action, index) =>
+            <div key={index}>
                 <p style={{ color: 'red' }}>{action.name}</p>
 
-                {action.items.map(nam => <p>{nam}</p>)}
+                {action.items.map((item, index) => <p key={index}>{item}</p>)}
             </div>) : "......"
 
     }

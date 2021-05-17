@@ -12,6 +12,7 @@ const reducers = combineReducers({
     user: require('./user/UserRedux').reducer,
     role: require('./user/RoleRedux').reducer,
     edit: require('./user/EditRedux').reducer,
+    create: require('./user/CreateRedux').reducer,
 });
 
 const makeConfiguredStore = (reducer) => {

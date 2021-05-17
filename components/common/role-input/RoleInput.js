@@ -16,10 +16,6 @@ class RoleInput extends React.Component {
     render() {
         const { classify } = this.state;
         const { classes, item, handleInput } = this.props;
-        console.log(this.props);
-
-        const value = item[classify.edit] ? item[classify.edit] : ""
-        console.log("🚀 ~ RoleInput ~ render ~ value", value.name)
 
         return (
             <div className={classes.inputColor}>
@@ -30,7 +26,7 @@ class RoleInput extends React.Component {
                             <input
                                 type='text'
                                 id="role"
-                                value={value.name}
+                                value={item.name || ""}
                                 onChange={(e) => handleInput(e, "name")}
                             />
                         </div>
@@ -39,7 +35,7 @@ class RoleInput extends React.Component {
                             <label htmlFor="desc">Mô tả</label>
                             <textarea
                                 type='text'
-                                value={value.description}
+                                value={item.description || ""}
                                 onChange={(e) => handleInput(e, "description")}
                                 rows='7' cols='40' id="desc" />
                         </div>

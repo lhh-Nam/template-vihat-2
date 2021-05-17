@@ -21,11 +21,9 @@ class RoleEdit extends React.Component {
         super(props);
         this.state = {
             classify: {
-                role: 'roles',
                 edit: 'edits',
             },
             item: {},
-            luan: 'ádfasdf'
         };
     }
 
@@ -38,11 +36,14 @@ class RoleEdit extends React.Component {
 
     }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.editContent !== prevState.editContent) {
-            return { item: nextProps.editContent };
+    componentDidUpdate(prevProps, prevState) {
+        const { classify } = this.state;
+        const { editContent, editFetching } = this.props;
+        if (prevProps.editContent !== editContent) {
+            this.setState({                  //update the state after checking
+                item: editContent[classify.edit]
+            });
         }
-        else return null;
     }
 
     handleChange = (event) => {
@@ -56,34 +57,23 @@ class RoleEdit extends React.Component {
 
 
     handleInput = (e, key) => {
-
-        const { classify } = this.state;
         this.setState({
-
-            //
             item: {
                 ...this.state.item,
-                [classify.edit]: {
-                    [key]: e.target.value
-                },
+                [key]: e.target.value
             }
-
         });
-
-
     };
 
     _renderRoleInput() {
         const { classes } = this.props;
-        const { classify, item, luan } = this.state;
+        const { classify, item } = this.state;
         console.log("🚀 ~ RoleEdit ~ _renderRoleInput ~ item", item)
         const { editContent, editFetching } = this.props;
 
-        let nam = item;
-
         return (
             <div>
-                {editFetching[classify.edit] ? 'Loading...' : <RoleInput item={nam} luan={luan} handleInput={(e, key) => this.handleInput(e, key)} />}
+                {editFetching[classify.edit] ? 'Loading...' : <RoleInput item={item} handleInput={(e, key) => this.handleInput(e, key)} />}
             </div>
             //editContent[classify.edit] ? <RoleInput item={item} name={editContent[classify.edit].name} desc={editContent[classify.edit].description} /> : "Loading..."
         )
@@ -106,11 +96,9 @@ class RoleEdit extends React.Component {
         const { item, classify } = this.state;
         const { editContent, editFetching } = this.props;
 
-        let color = item[classify.edit] ? item[classify.edit].color : ""
-
         return (
             <div className={classes.roleEdit} >
-                <div className={classes.heading} style={{ background: `${color}` }}>
+                <div className={classes.heading} style={{ background: `${item.color}` }}>
                     <div className={classes.fixed}></div>
                 </div>
 
@@ -126,8 +114,8 @@ class RoleEdit extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        roleFetching: state.role.fetching,
-        roleContent: state.role.content,
+        // roleFetching: state.role.fetching,
+        // roleContent: state.role.content,
         editFetching: state.edit.fetching,
         editContent: state.edit.content,
     }
