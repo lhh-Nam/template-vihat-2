@@ -46,6 +46,7 @@ class RoleCreate extends React.Component {
     onColor(color) {
         this.setState({
             item: {
+                ...this.state.item,
                 color: color,
             }
         })
@@ -94,7 +95,7 @@ class RoleCreate extends React.Component {
         const { classes } = this.props;
         const { item, classify } = this.state;
 
-        let color = item.color || `rgb(76, 167, 80)`;
+        let color = item.color || `#4ca750`;
 
         return (
             <div className={classes.roleEdit} >

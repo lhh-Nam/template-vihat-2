@@ -13,19 +13,21 @@ export const styles = theme => ({
         },
 
         '& img': {
-            width: 15,
-            height: 15,
+
         },
     },
 
     wrapper: {
         display: 'flex',
         alignItems: 'center',
+        height: '100%',
         padding: '0px 20px',
     },
 
     name: {
         flexBasis: '20%',
+        margin: 0,
+
     },
 
     downUpBtn: {

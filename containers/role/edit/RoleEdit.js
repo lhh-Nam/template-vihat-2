@@ -62,15 +62,30 @@ class RoleEdit extends React.Component {
         });
     };
 
+    onColor(color) {
+        this.setState({
+            item: {
+                ...this.state.item,
+                color: color,
+            }
+        })
+    }
+
     _renderRoleInput() {
         const { classes } = this.props;
         const { classify, item } = this.state;
-        console.log("🚀 ~ RoleEdit ~ _renderRoleInput ~ item", item)
         const { editContent, editFetching } = this.props;
 
         return (
             <div>
-                {editFetching[classify.edit] ? 'Loading...' : <RoleInput item={item} handleInput={(e, key) => this.handleInput(e, key)} />}
+                {editFetching[classify.edit]
+                    ? 'Loading...' :
+                    <RoleInput
+                        item={item}
+                        onColor={(color) => this.onColor(color)}
+                        handleInput={(e, key) => this.handleInput(e, key)}
+
+                    />}
             </div>
             //editContent[classify.edit] ? <RoleInput item={item} name={editContent[classify.edit].name} desc={editContent[classify.edit].description} /> : "Loading..."
         )

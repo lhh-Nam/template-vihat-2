@@ -8,6 +8,7 @@ import Switch from "@material-ui/core/Switch";
 import Paper from "@material-ui/core/Paper";
 import Collapse from "@material-ui/core/Collapse";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { transform } from 'lodash';
 
 class RoleForm extends React.Component {
     constructor(props) {
@@ -16,6 +17,8 @@ class RoleForm extends React.Component {
             name: '',
             isDiable: false,
             isCollapse: false,
+            isRotate: false,
+            isOpacity: false,
             actions: []
         }
     }
@@ -27,14 +30,23 @@ class RoleForm extends React.Component {
     }
 
     onDisable = (event) => {
-        this.setState({ ...this.state, [event.target.name]: event.target.checked });
+        const { isOpacity } = this.state
+        this.setState({
+            [event.target.name]: event.target.checked,
+            isOpacity: !isOpacity,
+        });
     };
 
     onCollapse = () => {
+        const { isCollapse, isRotate } = this.state
         this.setState(
-            { isCollapse: !this.state.isCollapse }
+            {
+                isCollapse: !isCollapse,
+                isRotate: !isRotate,
+            }
         );
-        //this.setState({ ...this.state, [event.target.name]: event.target.checked });
+
+
     };
 
     onFunc() {
@@ -117,41 +129,48 @@ class RoleForm extends React.Component {
 
     _renderWrapper() {
         const { classes, module } = this.props;
-        const { name, isDiable } = this.state;
+        const { name, isDiable, isRotate } = this.state;
 
         return (
-            <div >
-                <div className={classes.wrapper}>
-                    <div className={classes.name}>
-                        <p>{name}</p>
-                    </div>
 
-                    <div className={classes.downUpBtn}>
-                        <img className={classes.nam} src={require('../../../assets/icons/common/ic_arrow_down_g.png')} />
-                    </div>
+            <div className={classes.wrapper}>
+                <div className={classes.name}>
+                    <p>{name}</p>
+                </div>
 
-                    <div >
-                        <Switch
-                            checked={isDiable}
-                            onChange={(e) => this.onDisable(e)}
-                            color="primary"
-                            name="isDiable"
-                            inputProps={{ 'aria-label': 'primary checkbox' }}
-                        />
-                        {/* <input type='checkbox' className={classes.appleSwitch} /> */}
-                    </div>
+                <div className={classes.downUpBtn}>
+                    <img
+                        style={{
+                            height: 11,
+                            width: 11,
+                            transition: `all 0.2s ease 0s`,
+                            transform: isRotate && 'rotate(180deg)',
+                        }}
+                        src={require('../../../assets/icons/common/ic_arrow_down_g.png')} />
+                </div>
+
+                <div >
+                    <Switch
+                        checked={isDiable}
+                        onChange={(e) => this.onDisable(e)}
+                        color="primary"
+                        name="isDiable"
+                        inputProps={{ 'aria-label': 'primary checkbox' }}
+                    />
+                    {/* <input type='checkbox' className={classes.appleSwitch} /> */}
                 </div>
             </div>
+
         )
     }
 
     _renderFunction() {
-        const { name, actions } = this.state;
+        const { name, actions, isOpacity } = this.state;
         const { classes } = this.props;
         //console.log("🚀 ~ RoleForm ~ _renderFunction ~ actions", actions)
 
         return (
-            <div className={classes.func}>
+            <div style={{ opacity: isOpacity && '0.5' }}>
                 {actions.length > 0 ? actions.map((action, index) =>
                     <div key={index}>
                         <p style={{ color: 'red' }}>{action.name}</p>

@@ -12,7 +12,7 @@ import { checked } from 'glamor';
 
 // assets
 const icons = {
-    checked: require('../../../assets/icons/common/ic_add_data.png')
+    checked: require('../../../assets/icons/common/ic_delete_white.png')
 };
 
 class RoleInput extends React.Component {
@@ -22,24 +22,43 @@ class RoleInput extends React.Component {
             classify: {
                 edit: 'edits',
             },
+            colorChecked: '',
         }
     }
 
+    componentDidMount() {
+        const { item } = this.props;
+
+        this.setState({
+            colorChecked: item.color || '#4ca750'
+        })
+    }
+
     colors = [
-        "rgb(45, 69, 99)",
-        "rgb(165, 64, 184)",
-        "rgb(233, 68, 64)",
-        "rgb(254, 162, 32)",
-        "rgb(76, 167, 80)",
-        "rgb(38, 122, 255)",
-        "rgb(73, 73, 73)",
-        "rgb(88, 93, 113)",
-        "rgb(251, 123, 101)",
-        "rgb(255, 168, 80)",
-        "rgb(233, 188, 90)",
-        "rgb(88, 144, 220)",
-        "rgb(87, 191, 219)",
+        '#2d4563',
+        '#a540b8',
+        '#e94440',
+        '#fea220',
+        '#4ca750',
+        '#267aff',
+        '#494949',
+        '#585d71',
+        '#fb7b65',
+        '#ffa850',
+        '#e9bc5a',
+        '#5890dc',
+        '#57bfdb',
     ];
+
+    handleColor(color) {
+        const { classes, onColor, block, item } = this.props;
+        const { colorChecked } = this.state;
+
+        onColor(color);
+        this.setState({
+            colorChecked: color
+        })
+    }
 
     _renderInput() {
         const { classes, item, handleInput } = this.props;
@@ -69,14 +88,7 @@ class RoleInput extends React.Component {
 
     _renderColor() {
         const { classes, onColor, block, item } = this.props;
-        const { colors } = this.state;
-
-
-        let check = this.colors.map(color => color === item.color ? true : false)
-
-        console.log("🚀 ~ colors", this.colors)
-        console.log("🚀 ~ item", item.color)
-        console.log("🚀 ~ check", check)
+        const { colorChecked } = this.state;
 
         return (
             <div className={classes.colorArea}>
@@ -85,8 +97,8 @@ class RoleInput extends React.Component {
                 <div className={classes.group} >
                     {
                         this.colors.map((color, index) => (
-                            <div onClick={() => onColor(color)} className={classes.color} style={{ background: `${color}` }} key={index}>
-                                <ImageViewer src={icons['checked']} size={40} />
+                            <div onClick={() => this.handleColor(color)} className={classes.color} style={{ background: `${color}` }} key={index}>
+                                <ImageViewer src={icons['checked']} size={40} style={{ display: colorChecked === color ? 'block' : 'none' }} />
                             </div>
                         ))
                     }
