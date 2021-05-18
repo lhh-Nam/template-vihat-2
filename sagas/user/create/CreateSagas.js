@@ -10,10 +10,8 @@ import { validateResp, getErrorMsg } from '../../../utils/StringUtils';
 export function* getCreates(action) {
     const { classify, params } = action;
     const startReqAt = getTimestamp();
-    console.log('nam saga 1');
 
     try {
-        console.log('nam saga');
         let resp = yield call(CreateAPIs.getCreates, params);
         // console.log("🚀 ~ function*getCreates ~ resp", resp)
         yield delay(getDelayTime(startReqAt, 's', 2));

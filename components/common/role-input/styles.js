@@ -1,7 +1,6 @@
 export const styles = theme => ({
     inputColor: {
         backgroundColor: '#fff',
-        marginBottom: 30,
         borderRadius: 10,
         boxShadow: '0px 4px 16px 0px rgb(125 125 125 / 8%)',
     },
@@ -20,23 +19,23 @@ export const styles = theme => ({
         flexDirection: 'column',
         width: '80%',
         paddingBottom: 30,
-
         '& label': {
             paddingBottom: 8,
         },
-
         '& input, & textarea': {
             border: 'none',
             borderRadius: 10,
             padding: "10px 20px",
             resize: 'none',
-
             boxShadow: '0px 4px 16px 0px rgb(125 125 125 / 8%)',
             '&:focus, &:hover': {
                 outline: "none",
                 boxShadow: '0px 4px 16px 0px rgb(125 125 125 / 20%)',
             }
-        }
+        },
+        '&:last-of-type': {
+            paddingBottom: 0,
+        },
     },
 
     colorArea: {

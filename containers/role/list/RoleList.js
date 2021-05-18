@@ -26,10 +26,10 @@ class RoleList extends React.Component {
 		}
 	}
 
-	// componentDidMount() {
-	// 	const { classify } = this.state;
-	// 	this.props.getRoles(classify.role, { page: 1, size: 15 });
-	// }
+	componentDidMount() {
+		const { classify } = this.state;
+		this.props.getRoles(classify.role, { page: 1, size: 15 });
+	}
 
 	onItems = (item) => {
 		pushRoute(`/role/edit/${item._id}`, {

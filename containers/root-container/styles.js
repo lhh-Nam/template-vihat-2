@@ -8,6 +8,8 @@ export const styles = theme => ({
         float: 'right',
         height: '100vh',
         width: '100vw',
-        overflowX: 'auto'
+        overflowX: 'auto',
+        fontSize: 14,
+        color: '#494949',
     },
 });

@@ -1,24 +1,36 @@
 import React from 'react';
 import { compose } from 'redux';
+
 // styles
 import { withStyles } from '@material-ui/core/styles';
 import { styles } from './styles';
 
+// components
+import { ImageViewer } from '../../../components/common';
+
+//  material
 import Switch from "@material-ui/core/Switch";
 import Paper from "@material-ui/core/Paper";
 import Collapse from "@material-ui/core/Collapse";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { transform } from 'lodash';
+
+// assets
+const icons = {
+    arrowDown: require('../../../assets/icons/common/ic_arrow_down_g.png'),
+    checkboxChecked: require('../../../assets/icons/common/ic_checkbox_b.png'),
+    checkboxNonecheck: require('../../../assets/icons/common/ic_checkbox_outline_g.png'),
+};
 
 class RoleForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             name: '',
-            isDiable: false,
+            isDiable: true,
             isCollapse: false,
             isRotate: false,
             isOpacity: false,
+            isChecked: false,
             actions: []
         }
     }
@@ -45,9 +57,16 @@ class RoleForm extends React.Component {
                 isRotate: !isRotate,
             }
         );
-
-
     };
+
+    onCheck() {
+        const { isChecked } = this.state
+        this.setState(
+            {
+                isChecked: !isChecked,
+            }
+        );
+    }
 
     onFunc() {
         let funcs = this.props.module.functions;
@@ -139,14 +158,15 @@ class RoleForm extends React.Component {
                 </div>
 
                 <div className={classes.downUpBtn}>
-                    <img
+                    <ImageViewer
+                        src={icons['arrowDown']}
+                        size={11}
                         style={{
-                            height: 11,
-                            width: 11,
+
                             transition: `all 0.2s ease 0s`,
                             transform: isRotate && 'rotate(180deg)',
-                        }}
-                        src={require('../../../assets/icons/common/ic_arrow_down_g.png')} />
+                        }} />
+
                 </div>
 
                 <div >
@@ -157,7 +177,6 @@ class RoleForm extends React.Component {
                         name="isDiable"
                         inputProps={{ 'aria-label': 'primary checkbox' }}
                     />
-                    {/* <input type='checkbox' className={classes.appleSwitch} /> */}
                 </div>
             </div>
 
@@ -165,50 +184,54 @@ class RoleForm extends React.Component {
     }
 
     _renderFunction() {
-        const { name, actions, isOpacity } = this.state;
+        const { name, actions, isOpacity, isChecked } = this.state;
         const { classes } = this.props;
-        //console.log("🚀 ~ RoleForm ~ _renderFunction ~ actions", actions)
 
         return (
-            <div style={{ opacity: isOpacity && '0.5' }}>
+            <div className={classes.funcContainer} style={{ opacity: isOpacity && '0.5' }}>
                 {actions.length > 0 ? actions.map((action, index) =>
-                    <div key={index}>
-                        <p style={{ color: 'red' }}>{action.name}</p>
+                    <div key={index} className={classes.funcGroup}>
+                        <div className={classes.funcName}>
+                            <p>{action.name}</p>
+                        </div>
 
-                        {action.items.map((item, index) => <p key={index}>{item}</p>)}
-                    </div>) : "......"}
+                        {action.items.map((item, index) =>
+                            <div className={classes.action} onClick={() => this.onCheck()} key={index}>
+                                <ImageViewer
+                                    src={icons[`checkbox${isChecked ? 'Checked' : 'Nonecheck'}`]}
+                                    size={20}
+                                />
+                                <p>{item}</p>
+                            </div>
+                        )}
+                    </div>
+                ) : "......"}
             </div>
         )
-
     }
 
     render() {
         const { classes, module } = this.props;
         const { isCollapse } = this.state;
         return (
-            <div >
-                <div>
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                checked={isCollapse}
-                                onChange={() => this.onCollapse()}
-                                className={classes.displayNone}
-                            />
-                        }
-                        label={this._renderWrapper()}
-                        className={classes.roleItem}
-                    />
-                </div>
+            <div className={classes.collapse}>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={isCollapse}
+                            onChange={() => this.onCollapse()}
+                            className={classes.displayNone}
+                        />
+                    }
+                    label={this._renderWrapper()}
+                    className={classes.roleItem}
+                />
 
-                <div className={classes.container}>
-                    <Collapse in={isCollapse}>
-                        <Paper elevation={4} className={classes.paper}>
-                            {this._renderFunction()}
-                        </Paper>
-                    </Collapse>
-                </div>
-
+                <Collapse in={isCollapse} >
+                    <Paper elevation={4} className={classes.paper}>
+                        {this._renderFunction()}
+                    </Paper>
+                </Collapse>
             </div>
         );
     }

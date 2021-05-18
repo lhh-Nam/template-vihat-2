@@ -1,8 +1,4 @@
 export const styles = theme => ({
-    roleEdit: {
-        overflowX: 'auto',
-    },
-
     heading: {
         display: 'block',
         width: '100%',

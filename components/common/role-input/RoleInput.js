@@ -28,11 +28,22 @@ class RoleInput extends React.Component {
 
     componentDidMount() {
         const { item } = this.props;
+        console.log("🚀 ~ item", item)
 
         this.setState({
-            colorChecked: item.color || '#4ca750'
+            colorChecked: item.color || '#4ca750',
         })
     }
+
+    // componentDidUpdate(prevProps, prevState) {
+    //     const { classify } = this.state;
+    //     const { item } = this.props;
+    //     if (prevProps.item.color !== item.color) {
+    //         this.setState({          //update the state after checking
+    //             item: item.color || '#4ca750'
+    //         });
+    //     }
+    // }
 
     colors = [
         '#2d4563',
@@ -65,7 +76,7 @@ class RoleInput extends React.Component {
         return (
             <div className={classes.inputArea}>
                 <div className={classes.inputItem}>
-                    <label className={classes.nam} htmlFor="role">Tên quyền</label>
+                    <label htmlFor="role">Tên quyền</label>
                     <input
                         type='text'
                         id="role"
@@ -109,6 +120,7 @@ class RoleInput extends React.Component {
 
     render() {
         const { classes, item, handleInput } = this.props;
+
         return (
             <div className={classes.inputColor}>
                 <div className={classes.container}>

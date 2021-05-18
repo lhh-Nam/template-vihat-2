@@ -1,11 +1,18 @@
 export const styles = theme => ({
+    collapse: {
+        marginTop: 32,
+        borderRadius: 10,
+        background: '#fff',
+        boxShadow: '0px 4px 16px 0px rgb(125 125 125 / 8%)',
+    },
+
     roleItem: {
         display: 'block',
         height: 50,
         cursor: 'pointer',
         backgroundColor: '#fff',
         borderRadius: 10,
-        margin: '0 0 30px 0',
+        margin: 0,
         boxShadow: '0px 4px 16px 0px rgb(125 125 125 / 8%)',
 
         '&:hover': {
@@ -20,6 +27,7 @@ export const styles = theme => ({
     wrapper: {
         display: 'flex',
         alignItems: 'center',
+        fontSize: 14,
         height: '100%',
         padding: '0px 20px',
     },
@@ -32,10 +40,6 @@ export const styles = theme => ({
 
     downUpBtn: {
         flexBasis: '75%',
-
-        '& $nam': {
-            transform: 'rotate(180deg)'
-        }
     },
 
     toggleBtn: {
@@ -79,13 +83,37 @@ export const styles = theme => ({
             backgroundColor: '#007aff'
         }
     },
-    container: {
 
-    },
+
     paper: {
-        marginBottom: theme.spacing(4)
+        boxShadow: 'none',
+        background: 'transparent',
     },
+
     displayNone: {
         display: 'none',
+    },
+
+    funcContainer: {
+        padding: 20,
+    },
+
+    funcGroup: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+
+    funcName: {
+        flexBasis: '100%',
+    },
+
+    action: {
+        flexBasis: '25%',
+        display: 'flex',
+
+        '& p': {
+            margin: 0,
+            paddingLeft: 5,
+        }
     }
 })
