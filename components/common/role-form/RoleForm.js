@@ -13,6 +13,7 @@ import Switch from "@material-ui/core/Switch";
 import Paper from "@material-ui/core/Paper";
 import Collapse from "@material-ui/core/Collapse";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { spread } from 'lodash';
 
 // assets
 const icons = {
@@ -36,7 +37,8 @@ class RoleForm extends React.Component {
             isChecked: false,
 
             isEnabledModule: module.enabled,
-            actions: []
+            actions: [],
+            checked: {},
         }
     }
 
@@ -62,13 +64,26 @@ class RoleForm extends React.Component {
         );
     };
 
-    onCheck() {
-        const { isChecked } = this.state
-        this.setState(
-            {
-                isChecked: !isChecked,
+    onCheck(funcName, action, index) {
+        const { checked } = this.state;
+
+        this.setState({
+            checked: {
+                ...checked,
+                [funcName]: {
+                    ...checked[funcName],
+                    [index]: action,
+                },
             }
-        );
+        })
+
+
+        // const { isChecked } = this.state
+        // this.setState(
+        //     {
+        //         isChecked: !isChecked,
+        //     }
+        // );
     }
 
     onFunc() {
@@ -201,7 +216,7 @@ class RoleForm extends React.Component {
                         </div>
 
                         {action.items.map((item, index) =>
-                            <div className={classes.action} onClick={() => this.onCheck()} key={index}>
+                            <div className={classes.action} onClick={() => this.onCheck(action.name, item, index)} key={index}>
                                 <ImageViewer
                                     src={icons[`checkbox${isChecked ? 'Checked' : 'Nonecheck'}`]}
                                     size={20}
@@ -217,9 +232,8 @@ class RoleForm extends React.Component {
 
     render() {
         const { classes, module } = this.props;
-        const { isCollapse } = this.state;
-        console.log(this.props.module)
-        console.log(this.state.isEnabledModule)
+        const { isCollapse, checked } = this.state;
+        console.log("🚀 ~ checked", checked)
         return (
             <div className={classes.collapse}>
                 <FormControlLabel
