@@ -45,7 +45,7 @@ class RoleList extends React.Component {
 		let roles = roleContent[classify.role];
 
 		//formatdate
-		let nam = getDateFormat('default', 1620029387223);
+		let nam = getCustomDate('hh:mm dd/mm/yyyy', 1620029387223);
 		console.log("🚀 ~ nam", nam);
 
 		return (
@@ -72,8 +72,8 @@ class RoleList extends React.Component {
 							<div className={classes.rowInfo}>
 								<div className={classes.infoItem}><p>{role.name}</p></div>
 								<div className={classes.infoItem}><p>{role.create_by.name}</p></div>
-								<div className={classes.infoItem}><p>{role.created_date}</p></div>
-								<div className={classes.infoItem}><p>{role.last_updated_date}</p></div>
+								<div className={classes.infoItem}><p>{getCustomDate('hh:mm dd/mm/yyyy', role.created_date)}</p></div>
+								<div className={classes.infoItem}><p>{getCustomDate('hh:mm dd/mm/yyyy', role.last_updated_date)}</p></div>
 								<div className={classes.visible}>
 									<p >Tạo bản sao</p>
 									<img src={require('../../../assets/icons/common/ic_trash_can_r.png')} /></div>

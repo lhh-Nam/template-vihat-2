@@ -63,6 +63,7 @@ class RoleForm extends React.Component {
         const { checked } = this.state;
 
         if (checked[funcName][index] === action) {
+            console.log("huy");
             this.setState({
                 checked: {
                     ...checked,
@@ -83,19 +84,6 @@ class RoleForm extends React.Component {
                 }
             })
         }
-
-        // if (!checked[funcName][index]) {
-        //     console.log("nam");
-        //     this.setState({
-        //         checked: {
-        //             ...checked,
-        //             [funcName]: {
-        //                 ...checked[funcName],
-        //                 [index]: action,
-        //             },
-        //         }
-        //     })
-        // } else
     }
 
     onFunc() {
@@ -206,7 +194,6 @@ class RoleForm extends React.Component {
                             transition: `all 0.2s ease 0s`,
                             transform: isRotate && 'rotate(180deg)',
                         }} />
-
                 </div>
 
                 <div >
@@ -236,7 +223,7 @@ class RoleForm extends React.Component {
                         </div>
 
                         {action.items.map((item, index) =>
-                            <div className={classes.action} onClick={() => this.onCheck(action.name, item, index)} key={index}>
+                            <div className={classes.action} onClick={() => isEnabledModule && this.onCheck(action.name, item, index)} key={index}>
                                 <ImageViewer
                                     src={icons[`checkbox${checked[action.name][index] === item ? 'Checked' : 'Nonecheck'}`]}
                                     size={20}
