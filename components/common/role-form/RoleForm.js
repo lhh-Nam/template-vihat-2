@@ -13,7 +13,6 @@ import Switch from "@material-ui/core/Switch";
 import Paper from "@material-ui/core/Paper";
 import Collapse from "@material-ui/core/Collapse";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { spread } from 'lodash';
 
 // assets
 const icons = {
@@ -30,12 +29,8 @@ class RoleForm extends React.Component {
 
         this.state = {
             name: '',
-            isDiable: true,
             isCollapse: false,
             isRotate: false,
-            isOpacity: false,
-            isChecked: false,
-
             isEnabledModule: module.enabled,
             actions: [],
             checked: {},
@@ -66,7 +61,6 @@ class RoleForm extends React.Component {
 
     onCheck(funcName, action, index) {
         const { checked } = this.state;
-
         this.setState({
             checked: {
                 ...checked,
@@ -76,18 +70,11 @@ class RoleForm extends React.Component {
                 },
             }
         })
-
-
-        // const { isChecked } = this.state
-        // this.setState(
-        //     {
-        //         isChecked: !isChecked,
-        //     }
-        // );
     }
 
     onFunc() {
-        const { module } = this.props
+        const { module } = this.props;
+        const { checked } = this.state;
         let funcs = module.functions;
         let aArr = [];
         let bArr = [];
@@ -107,8 +94,15 @@ class RoleForm extends React.Component {
             }
         })
 
+        bArr.map(item => this.setState(prevState => ({
+            checked: {
+                ...prevState.checked,
+                [item]: {}
+            },
+        })))
+
         this.setState({
-            actions: result
+            actions: result,
         })
     }
 
@@ -167,8 +161,8 @@ class RoleForm extends React.Component {
     }
 
     _renderWrapper() {
-        const { classes, module } = this.props;
-        const { name, isDiable, isRotate, isEnabledModule } = this.state;
+        const { classes } = this.props;
+        const { name, isRotate, isEnabledModule } = this.state;
 
         return (
 
@@ -204,7 +198,8 @@ class RoleForm extends React.Component {
     }
 
     _renderFunction() {
-        const { name, actions, isOpacity, isChecked, isEnabledModule } = this.state;
+        const { actions, isEnabledModule, checked } = this.state;
+        console.log("🚀 ~ checked", checked)
         const { classes } = this.props;
 
         return (
@@ -218,7 +213,7 @@ class RoleForm extends React.Component {
                         {action.items.map((item, index) =>
                             <div className={classes.action} onClick={() => this.onCheck(action.name, item, index)} key={index}>
                                 <ImageViewer
-                                    src={icons[`checkbox${isChecked ? 'Checked' : 'Nonecheck'}`]}
+                                    src={icons[`checkbox${checked[action.name][index] ? 'Checked' : 'Nonecheck'}`]}
                                     size={20}
                                 />
                                 <p>{item}</p>
@@ -231,9 +226,9 @@ class RoleForm extends React.Component {
     }
 
     render() {
-        const { classes, module } = this.props;
-        const { isCollapse, checked } = this.state;
-        console.log("🚀 ~ checked", checked)
+        const { classes } = this.props;
+        const { isCollapse } = this.state;
+
         return (
             <div className={classes.collapse}>
                 <FormControlLabel

@@ -27,24 +27,6 @@ class RoleInput extends React.Component {
         }
     }
 
-    // componentDidMount() {
-    //     const { item } = this.props;
-
-    //     this.setState({
-    //         colorChecked: item.color || '#4ca750',
-    //     })
-    // }
-
-    // componentDidUpdate(prevProps, prevState) {
-    //     const { classify } = this.state;
-    //     const { item } = this.props;
-    //     if (prevProps.item.color !== item.color) {
-    //         this.setState({          //update the state after checking
-    //             item: item.color || '#4ca750'
-    //         });
-    //     }
-    // }
-
     colors = [
         '#2d4563',
         '#a540b8',
@@ -62,8 +44,7 @@ class RoleInput extends React.Component {
     ];
 
     handleColor(color) {
-        const { classes, onColor, block, item } = this.props;
-        const { colorChecked } = this.state;
+        const { onColor } = this.props;
 
         onColor(color);
         this.setState({
@@ -73,7 +54,6 @@ class RoleInput extends React.Component {
 
     _renderInput() {
         const { classes, item, handleInput } = this.props;
-        console.log("🚀 ~ item", item)
         return (
             <div className={classes.inputArea}>
                 <div className={classes.inputItem}>
@@ -99,7 +79,7 @@ class RoleInput extends React.Component {
     }
 
     _renderColor() {
-        const { classes, onColor, block, item } = this.props;
+        const { classes } = this.props;
         const { colorChecked } = this.state;
 
         return (
@@ -120,7 +100,7 @@ class RoleInput extends React.Component {
     }
 
     render() {
-        const { classes, item, handleInput } = this.props;
+        const { classes } = this.props;
         return (
             <div className={classes.inputColor}>
                 <div className={classes.container}>
