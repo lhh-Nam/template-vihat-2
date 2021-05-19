@@ -24,6 +24,9 @@ const icons = {
 class RoleForm extends React.Component {
     constructor(props) {
         super(props);
+
+        const { module } = this.props
+
         this.state = {
             name: '',
             isDiable: true,
@@ -31,6 +34,8 @@ class RoleForm extends React.Component {
             isRotate: false,
             isOpacity: false,
             isChecked: false,
+
+            isEnabledModule: module.enabled,
             actions: []
         }
     }
@@ -41,11 +46,9 @@ class RoleForm extends React.Component {
         // console.log(this.state);
     }
 
-    onDisable = (event) => {
-        const { isOpacity } = this.state
+    onEnabledModule = (event) => {
         this.setState({
             [event.target.name]: event.target.checked,
-            isOpacity: !isOpacity,
         });
     };
 
@@ -69,7 +72,8 @@ class RoleForm extends React.Component {
     }
 
     onFunc() {
-        let funcs = this.props.module.functions;
+        const { module } = this.props
+        let funcs = module.functions;
         let aArr = [];
         let bArr = [];
 
@@ -94,7 +98,8 @@ class RoleForm extends React.Component {
     }
 
     onName() {
-        let name = this.props.module.name;
+        const { module } = this.props
+        let name = module.name;
 
         switch (name) {
             case "admin":
@@ -148,7 +153,7 @@ class RoleForm extends React.Component {
 
     _renderWrapper() {
         const { classes, module } = this.props;
-        const { name, isDiable, isRotate } = this.state;
+        const { name, isDiable, isRotate, isEnabledModule } = this.state;
 
         return (
 
@@ -171,10 +176,10 @@ class RoleForm extends React.Component {
 
                 <div >
                     <Switch
-                        checked={isDiable}
-                        onChange={(e) => this.onDisable(e)}
+                        checked={isEnabledModule}
+                        onChange={(e) => this.onEnabledModule(e)}
                         color="primary"
-                        name="isDiable"
+                        name="isEnabledModule"
                         inputProps={{ 'aria-label': 'primary checkbox' }}
                     />
                 </div>
@@ -184,11 +189,11 @@ class RoleForm extends React.Component {
     }
 
     _renderFunction() {
-        const { name, actions, isOpacity, isChecked } = this.state;
+        const { name, actions, isOpacity, isChecked, isEnabledModule } = this.state;
         const { classes } = this.props;
 
         return (
-            <div className={classes.funcContainer} style={{ opacity: isOpacity && '0.5' }}>
+            <div className={classes.funcContainer} style={{ opacity: isEnabledModule || '0.5' }}>
                 {actions.length > 0 ? actions.map((action, index) =>
                     <div key={index} className={classes.funcGroup}>
                         <div className={classes.funcName}>
@@ -213,6 +218,8 @@ class RoleForm extends React.Component {
     render() {
         const { classes, module } = this.props;
         const { isCollapse } = this.state;
+        console.log(this.props.module)
+        console.log(this.state.isEnabledModule)
         return (
             <div className={classes.collapse}>
                 <FormControlLabel

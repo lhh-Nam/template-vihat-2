@@ -62,9 +62,9 @@ class RoleCreate extends React.Component {
     };
 
     _renderRoleInput() {
-        const { classes } = this.props;
         const { classify, item } = this.state;
         const { createContent, createFetching } = this.props;
+        let color = createContent[classify.create] ? createContent[classify.create].color : "";
 
         return (
             <div>
@@ -72,6 +72,7 @@ class RoleCreate extends React.Component {
                     ? 'Loading...' :
                     <RoleInput
                         item={item}
+                        color={color}
                         onColor={(color) => this.onColor(color)}
                         handleInput={(e, key) => this.handleInput(e, key)}
                     />}
@@ -94,15 +95,14 @@ class RoleCreate extends React.Component {
     render() {
         const { classes } = this.props;
         const { item, classify } = this.state;
+        console.log("🚀 ~ item", this.props.item)
 
         let color = item.color || `#4ca750`;
-
         return (
             <div className={classes.roleEdit} >
                 <div className={classes.heading} style={{ background: `${color}` }}>
                     <div className={classes.fixed}></div>
                 </div>
-
                 <div className={classes.main}>
                     {this._renderRoleInput()}
                     {this._renderRoleForm()}

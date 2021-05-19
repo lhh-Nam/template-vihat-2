@@ -18,22 +18,22 @@ const icons = {
 class RoleInput extends React.Component {
     constructor(props) {
         super(props);
+        const { color } = this.props;
         this.state = {
             classify: {
                 edit: 'edits',
             },
-            colorChecked: '',
+            colorChecked: color || '#4ca750',
         }
     }
 
-    componentDidMount() {
-        const { item } = this.props;
-        console.log("🚀 ~ item", item)
+    // componentDidMount() {
+    //     const { item } = this.props;
 
-        this.setState({
-            colorChecked: item.color || '#4ca750',
-        })
-    }
+    //     this.setState({
+    //         colorChecked: item.color || '#4ca750',
+    //     })
+    // }
 
     // componentDidUpdate(prevProps, prevState) {
     //     const { classify } = this.state;
@@ -73,6 +73,7 @@ class RoleInput extends React.Component {
 
     _renderInput() {
         const { classes, item, handleInput } = this.props;
+        console.log("🚀 ~ item", item)
         return (
             <div className={classes.inputArea}>
                 <div className={classes.inputItem}>
@@ -120,7 +121,6 @@ class RoleInput extends React.Component {
 
     render() {
         const { classes, item, handleInput } = this.props;
-
         return (
             <div className={classes.inputColor}>
                 <div className={classes.container}>
