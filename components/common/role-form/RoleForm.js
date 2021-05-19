@@ -61,15 +61,41 @@ class RoleForm extends React.Component {
 
     onCheck(funcName, action, index) {
         const { checked } = this.state;
-        this.setState({
-            checked: {
-                ...checked,
-                [funcName]: {
-                    ...checked[funcName],
-                    [index]: action,
-                },
-            }
-        })
+
+        if (checked[funcName][index] === action) {
+            this.setState({
+                checked: {
+                    ...checked,
+                    [funcName]: {
+                        ...checked[funcName],
+                        [index]: null,
+                    },
+                }
+            })
+        } else {
+            this.setState({
+                checked: {
+                    ...checked,
+                    [funcName]: {
+                        ...checked[funcName],
+                        [index]: action,
+                    },
+                }
+            })
+        }
+
+        // if (!checked[funcName][index]) {
+        //     console.log("nam");
+        //     this.setState({
+        //         checked: {
+        //             ...checked,
+        //             [funcName]: {
+        //                 ...checked[funcName],
+        //                 [index]: action,
+        //             },
+        //         }
+        //     })
+        // } else
     }
 
     onFunc() {
@@ -199,7 +225,6 @@ class RoleForm extends React.Component {
 
     _renderFunction() {
         const { actions, isEnabledModule, checked } = this.state;
-        console.log("🚀 ~ checked", checked)
         const { classes } = this.props;
 
         return (
@@ -213,7 +238,7 @@ class RoleForm extends React.Component {
                         {action.items.map((item, index) =>
                             <div className={classes.action} onClick={() => this.onCheck(action.name, item, index)} key={index}>
                                 <ImageViewer
-                                    src={icons[`checkbox${checked[action.name][index] ? 'Checked' : 'Nonecheck'}`]}
+                                    src={icons[`checkbox${checked[action.name][index] === item ? 'Checked' : 'Nonecheck'}`]}
                                     size={20}
                                 />
                                 <p>{item}</p>
