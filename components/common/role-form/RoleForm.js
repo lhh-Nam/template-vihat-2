@@ -32,15 +32,14 @@ class RoleForm extends React.Component {
             isCollapse: false,
             isRotate: false,
             isEnabledModule: module.enabled,
-            actions: [],
-            checked: {},
+            functions: [],
+            checked: [],
         }
     }
 
     componentDidMount() {
         this.onName();
         this.onFunc();
-        // console.log(this.state);
     }
 
     onEnabledModule = (event) => {
@@ -59,31 +58,51 @@ class RoleForm extends React.Component {
         );
     };
 
-    onCheck(funcName, action, index) {
-        const { checked } = this.state;
+    onCheck(funcName, indexFunc, action, enabled, indexAction) {
+        const { checked, functions } = this.state;
 
-        if (checked[funcName][index] === action) {
-            console.log("huy");
-            this.setState({
-                checked: {
-                    ...checked,
-                    [funcName]: {
-                        ...checked[funcName],
-                        [index]: null,
-                    },
+        this.setState({
+            functions: {
+                ...functions,
+                [indexFunc]: {
+                    name: funcName,
+                    items: {
+                        ...functions[indexFunc].items,
+                        [indexAction]: {
+                            name: action,
+                            enabled: !enabled,
+                        }
+                    }
                 }
-            })
-        } else {
-            this.setState({
-                checked: {
-                    ...checked,
-                    [funcName]: {
-                        ...checked[funcName],
-                        [index]: action,
-                    },
-                }
-            })
-        }
+            }
+        })
+    }
+
+    onSelectAll(isSelectAll) {
+        const { checked, functions } = this.state;
+        Object.keys(functions).map((func, indexFunc) => {
+            let fn = functions[func];
+
+            Object.keys(fn.items).map((action, indexAction) => {
+                let act = fn.items[action];
+
+                this.setState(prevState => ({
+                    functions: {
+                        ...prevState.functions,
+                        [indexFunc]: {
+                            name: fn.name,
+                            items: {
+                                ...prevState.functions[indexFunc].items,
+                                [indexAction]: {
+                                    name: act.name,
+                                    enabled: isSelectAll ? true : false,
+                                }
+                            }
+                        }
+                    }
+                }))
+            });
+        });
     }
 
     onFunc() {
@@ -94,29 +113,30 @@ class RoleForm extends React.Component {
         let bArr = [];
 
         funcs.map(func => {
-            aArr.push(func.name.split("."))
+            let action = func.name.split(".");
+            let enabled = func.enabled;
+            aArr.push({ action, enabled });
             let nam = func.name.split(".")[0];
-            let huy = func.name.split(".")[1];
             bArr.indexOf(nam) === -1 ? bArr.push(nam) : false
         });
 
         let result = bArr.map((b) => {
-            let a1 = aArr.filter((a) => a[0] === b).map((a) => a[1]);
+            let a1 = aArr.filter((a) => a.action[0] === b).map((a) => {
+                return {
+                    name: a.action[1],
+                    enabled: a.enabled,
+                }
+            });
             return {
                 name: b,
-                items: a1,
+                items: Object.assign({}, a1),
             }
         })
 
-        bArr.map(item => this.setState(prevState => ({
-            checked: {
-                ...prevState.checked,
-                [item]: {}
-            },
-        })))
 
         this.setState({
-            actions: result,
+            functions: result,
+            checked: Object.assign({}, result),
         })
     }
 
@@ -211,35 +231,52 @@ class RoleForm extends React.Component {
     }
 
     _renderFunction() {
-        const { actions, isEnabledModule, checked } = this.state;
+        const { functions, isEnabledModule, checked } = this.state;
         const { classes } = this.props;
 
         return (
-            <div className={classes.funcContainer} style={{ opacity: isEnabledModule || '0.5' }}>
-                {actions.length > 0 ? actions.map((action, index) =>
-                    <div key={index} className={classes.funcGroup}>
-                        <div className={classes.funcName}>
-                            <p>{action.name}</p>
-                        </div>
-
-                        {action.items.map((item, index) =>
-                            <div className={classes.action} onClick={() => isEnabledModule && this.onCheck(action.name, item, index)} key={index}>
-                                <ImageViewer
-                                    src={icons[`checkbox${checked[action.name][index] === item ? 'Checked' : 'Nonecheck'}`]}
-                                    size={20}
-                                />
-                                <p>{item}</p>
+            <div >
+                {Object.keys(functions).length > 0 ? Object.keys(functions).map((func, indexFunc) => {
+                    let fn = functions[func];
+                    return (
+                        <div key={indexFunc} className={classes.funcGroup}>
+                            <div className={classes.funcName}>
+                                <p>{fn.name}</p>
                             </div>
-                        )}
-                    </div>
-                ) : "......"}
+
+                            {
+                                Object.keys(fn.items).map((action, indexAction) => {
+                                    let act = fn.items[action];
+                                    return (
+                                        <div
+                                            className={classes.action}
+                                            onClick={() => isEnabledModule && this.onCheck(fn.name,
+                                                indexFunc, act.name, act.enabled, indexAction)}
+                                            key={indexAction}
+                                            style={{ cursor: isEnabledModule ? 'pointer' : 'text' }}
+                                        >
+                                            <ImageViewer
+                                                src={icons[`checkbox${act.enabled ? 'Checked' : 'Nonecheck'}`]}
+                                                size={20}
+                                            />
+                                            <p style={{ color: act.enabled ? `#267aff` : '#494949' }}>{act.name}</p>
+                                        </div>
+                                    )
+                                })
+                            }
+
+                        </div>
+                    )
+                }) : "......"}
             </div>
         )
     }
 
+
+
     render() {
         const { classes } = this.props;
-        const { isCollapse } = this.state;
+        const { isCollapse, isEnabledModule } = this.state;
 
         return (
             <div className={classes.collapse}>
@@ -257,7 +294,19 @@ class RoleForm extends React.Component {
 
                 <Collapse in={isCollapse} >
                     <Paper elevation={4} className={classes.paper}>
-                        {this._renderFunction()}
+                        <div className={classes.funcContainer} style={{ opacity: isEnabledModule ? 1 : 0.5 }}>
+                            {this._renderFunction()}
+                            <div className={classes.selects}>
+                                <p
+                                    onClick={() => isEnabledModule && this.onSelectAll()}
+                                    style={{ cursor: isEnabledModule ? 'pointer' : 'text' }}
+                                >Bỏ chọn tất cả</p>
+                                <p
+                                    onClick={() => isEnabledModule && this.onSelectAll("isSelectAll")}
+                                    style={{ cursor: isEnabledModule ? 'pointer' : 'text' }}
+                                >Chọn tất cả</p>
+                            </div>
+                        </div>
                     </Paper>
                 </Collapse>
             </div>

@@ -12,12 +12,11 @@ export function* getEdits(action) {
     const startReqAt = getTimestamp();
     try {
         let resp = yield call(EditAPIs.getEdits, params);
-        // console.log("🚀 ~ function*getEdits ~ resp", resp)
         yield delay(getDelayTime(startReqAt, 's', 2));
         if (validateResp(resp)) {
             yield put(EditActions.getEditsSuccess(classify, resp.payload));
         } else throw resp;
     } catch (error) {
-        yield put(EditActions.editCommonFailure(classify, getErrorMsg(error)));
+        //yield put(EditActions.editCommonFailure(classify, getErrorMsg(error)));
     }
 }

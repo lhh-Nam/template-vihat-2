@@ -13,12 +13,11 @@ export function* getCreates(action) {
 
     try {
         let resp = yield call(CreateAPIs.getCreates, params);
-        // console.log("🚀 ~ function*getCreates ~ resp", resp)
         yield delay(getDelayTime(startReqAt, 's', 2));
         if (validateResp(resp)) {
             yield put(CreateActions.getCreatesSuccess(classify, resp.payload));
         } else throw resp;
     } catch (error) {
-        //yield put(CreateActions.editCommonFailure(classify, getErrorMsg(error)));
+        //yield put(CreateActions.createCommonFailure(classify, getErrorMsg(error)));
     }
 }

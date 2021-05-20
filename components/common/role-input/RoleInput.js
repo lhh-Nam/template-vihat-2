@@ -1,14 +1,12 @@
 import React from 'react';
 import { compose } from 'redux';
 
-
 // components
 import { WebContent, ImageViewer } from '../../common';
 
 // styles
 import { withStyles } from '@material-ui/core/styles';
 import { styles } from './styles';
-import { checked } from 'glamor';
 
 // assets
 const icons = {
@@ -18,12 +16,11 @@ const icons = {
 class RoleInput extends React.Component {
     constructor(props) {
         super(props);
-        const { color } = this.props;
         this.state = {
             classify: {
+                create: 'creates',
                 edit: 'edits',
             },
-            colorChecked: color || '#4ca750',
         }
     }
 
@@ -43,17 +40,8 @@ class RoleInput extends React.Component {
         '#57bfdb',
     ];
 
-    handleColor(color) {
-        const { onColor } = this.props;
-
-        onColor(color);
-        this.setState({
-            colorChecked: color
-        })
-    }
-
     _renderInput() {
-        const { classes, item, handleInput } = this.props;
+        const { classes, item, onInput } = this.props;
         return (
             <div className={classes.inputArea}>
                 <div className={classes.inputItem}>
@@ -62,16 +50,15 @@ class RoleInput extends React.Component {
                         type='text'
                         id="role"
                         value={item.name || ""}
-                        onChange={(e) => handleInput(e, "name")}
+                        onChange={(e) => onInput(e, "name")}
                     />
                 </div>
-
                 <div className={classes.inputItem}>
                     <label htmlFor="desc">Mô tả</label>
                     <textarea
                         type='text'
                         value={item.description || ""}
-                        onChange={(e) => handleInput(e, "description")}
+                        onChange={(e) => onInput(e, "description")}
                         rows='7' cols='40' id="desc" />
                 </div>
             </div>
@@ -79,9 +66,8 @@ class RoleInput extends React.Component {
     }
 
     _renderColor() {
-        const { classes } = this.props;
-        const { colorChecked } = this.state;
-
+        const { classes, item, onColor } = this.props;
+        let colorProp = item.color || `#4ca750`;
         return (
             <div className={classes.colorArea}>
                 <lable>Màu nổi bật</lable>
@@ -89,8 +75,8 @@ class RoleInput extends React.Component {
                 <div className={classes.group} >
                     {
                         this.colors.map((color, index) => (
-                            <div onClick={() => this.handleColor(color)} className={classes.color} style={{ background: `${color}` }} key={index}>
-                                <ImageViewer src={icons['checked']} size={40} style={{ display: colorChecked === color ? 'block' : 'none' }} />
+                            <div onClick={() => onColor(color)} className={classes.color} style={{ background: `${color}` }} key={index}>
+                                <ImageViewer src={icons['checked']} size={40} style={{ display: colorProp === color ? 'block' : 'none' }} />
                             </div>
                         ))
                     }
@@ -101,10 +87,10 @@ class RoleInput extends React.Component {
 
     render() {
         const { classes } = this.props;
+        console.log(this.props)
         return (
             <div className={classes.inputColor}>
                 <div className={classes.container}>
-
                     {this._renderInput()}
                     {this._renderColor()}
                 </div>

@@ -110,10 +110,22 @@ export const styles = theme => ({
     action: {
         flexBasis: '25%',
         display: 'flex',
-
         '& p': {
             margin: 0,
             paddingLeft: 5,
+        }
+    },
+
+    selects: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+
+        '& p': {
+            paddingLeft: 8,
+            cursor: 'pointer',
+            '&:first-child': {
+                marginRight: 16,
+            }
         }
     }
 })
